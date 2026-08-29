@@ -1576,7 +1576,16 @@ render();
     /* 主区占满整宽 */
     .main { margin-left: 0; padding: 72px 14px 96px; }
     .main > #screen { max-width: none; }
-    /* 图像/表格：单列为主，重要的仍 2 列 */
+    /* 严防水平溢出（避免手机上出现左右滑动条，Tab 栏也不会被"挤走"） */
+    html, body { overflow-x: hidden; }
+    * { max-width: 100%; box-sizing: border-box; }
+    /* 模块页瘦身：去掉头图背景，改为简洁标题栏（减少渲染压力 + 防溢出） */
+    .hero.has-cover { min-height: 0; padding: 12px 14px; }
+    .hero.has-cover .hero-bg { display: none; }
+    .hero.has-cover > .hero-inner { padding: 0; flex-wrap: wrap; }
+    .hero-tx { flex: 1 1 180px; }
+    /* 搜索框在窄屏改 100%，避免和标题挤成一行撑宽 */
+    .search-box { width: 100%; }
     .header { flex-wrap: wrap; align-items: center; gap: 10px; }
     .header h2 { font-size: 22px; }
     .date-chip { margin-left: auto; }
