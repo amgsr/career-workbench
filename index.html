@@ -1576,9 +1576,17 @@ render();
     /* 主区占满整宽 */
     .main { margin-left: 0; padding: 72px 14px 96px; }
     .main > #screen { max-width: none; }
-    /* 严防水平溢出（避免手机上出现左右滑动条，Tab 栏也不会被"挤走"） */
-    html, body { overflow-x: hidden; }
-    * { max-width: 100%; box-sizing: border-box; }
+    /* 严防左右溢出：手机上不再出现横向滑动条，底栏不会被"挤走" */
+    html { overflow-x: hidden; }
+    /* 纵向滚动正常化：确保内容能一直往下滑看全，不被任何容器裁切 */
+    body, .main, #screen { min-height: 0; }
+    .main { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    /* 内容子项：禁止被长内容撑宽而横向溢出；长文本自动换行 */
+    #screen, .view, .panel, .modcard, .rec, .tk, .catbar, .grid > *,
+    .ov2-body > *, .mod-side, .quick-grid > *, .pin-list > *, .hero-inner {
+      min-width: 0; }
+    #screen { overflow-wrap: anywhere; word-break: break-word; }
+    img, svg, video, canvas { max-width: 100%; height: auto; }
     /* 模块页瘦身：去掉头图背景，改为简洁标题栏（减少渲染压力 + 防溢出） */
     .hero.has-cover { min-height: 0; padding: 12px 14px; }
     .hero.has-cover .hero-bg { display: none; }
